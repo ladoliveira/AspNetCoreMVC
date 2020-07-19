@@ -3,6 +3,7 @@ using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Threading.Tasks;
@@ -25,8 +26,12 @@ namespace CasaDoCodigo.Controllers
             return View(produtoRepository.GetProdutos());
         }
 
-        public IActionResult Carrinho()
+        public IActionResult Carrinho(string codigo)
         {
+            if(!string.IsNullOrEmpty(codigo)){
+                pedidoRepository.AddItem(codigo);
+            }
+
             Pedido pedido = pedidoRepository.GetPedido();
             return View(pedido.Itens);
         }
